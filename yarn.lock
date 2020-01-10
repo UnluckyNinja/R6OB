@@ -2342,6 +2342,13 @@ bser@2.1.1:
   dependencies:
     node-int64 "^0.4.0"
 
+buefy@^0.8.0:
+  version "0.8.9"
+  resolved "https://registry.npm.taobao.org/buefy/download/buefy-0.8.9.tgz#e671f00d2b4b99fa666169514cb81d7042807c09"
+  integrity sha1-5nHwDStLmfpmYWlRTLgdcEKAfAk=
+  dependencies:
+    bulma "0.7.5"
+
 buffer-from@1.x, buffer-from@^1.0.0:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/buffer-from/download/buffer-from-1.1.1.tgz#32713bc028f75c02fdb710d7c7bcec1f2c6070ef"
@@ -2380,6 +2387,11 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/builtin-status-codes/download/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
+
+bulma@0.7.5:
+  version "0.7.5"
+  resolved "https://registry.npm.taobao.org/bulma/download/bulma-0.7.5.tgz#35066c37f82c088b68f94450be758fc00a967208"
+  integrity sha1-NQZsN/gsCIto+URQvnWPwAqWcgg=
 
 bytes@3.0.0:
   version "3.0.0"
@@ -10345,6 +10357,11 @@ vue-class-component@^7.0.2, vue-class-component@^7.1.0:
   version "7.1.0"
   resolved "https://registry.npm.taobao.org/vue-class-component/download/vue-class-component-7.1.0.tgz#b33efcb10e17236d684f70b1e96f1946ec793e87"
   integrity sha1-sz78sQ4XI21oT3Cx6W8ZRux5Poc=
+
+vue-cli-plugin-buefy@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.npm.taobao.org/vue-cli-plugin-buefy/download/vue-cli-plugin-buefy-0.3.7.tgz#31e5637529482a5a4564676f539db16278b0895c"
+  integrity sha1-MeVjdSlIKlpFZGdvU52xYniwiVw=
 
 vue-eslint-parser@^5.0.0:
   version "5.0.0"
