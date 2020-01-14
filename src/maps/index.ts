@@ -1,7 +1,13 @@
 export interface R6Map {
   name: string;
   coverSrc: string;
-  floors: string[];
+  floors: MapLayer[];
+}
+
+export interface MapLayer {
+  name: string;
+  image: string;
+  layers: MapLayer[];
 }
 
 const fileNames = [
@@ -27,13 +33,41 @@ const fileNames = [
   'yacht_cover.webp',
 ];
 
+const floorSrc = require.context('@/assets/maps/', true);
+
 const maps: R6Map[] = fileNames.map((file) => {
-  const name = file.match(/^(.*)_/)![1];
+  const regex = /^(.*)_/;
+  if (!regex.test(file)) throw `illegal map file name: ${file}`;
+
+  const name = file.match(regex)![1];
+  let files = floorSrc.keys().filter((path) => {
+    return path.startsWith(`./${name}`);
+  });
+
+  // floors
+  let layers: MapLayer[] = files.map((path) => {
+    return {
+      name: filename(path),
+      image: floorSrc(path),
+      layers: []
+    };
+  });
   return {
     name,
     coverSrc: file,
-    floors: []
+    floors: layers,
   };
 });
+
+function filename(path: string): any {
+  let temp = path.split('/').pop();
+  if (!temp) temp = path;
+  let dot = temp.lastIndexOf('.');
+  if (dot === -1) {
+    return temp;
+  }
+  return temp.slice(0, dot);
+
+}
 
 export default maps;

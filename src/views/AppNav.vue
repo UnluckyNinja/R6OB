@@ -17,14 +17,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import Menu from './Menu.vue';
+import Menu from '../components/Menu.vue';
 
 @Component({
   components: {
     Menu
   }
 })
-export default class NavBar extends Vue {
+export default class AppNav extends Vue {
   private isOpen: boolean = true;
 }
 </script>

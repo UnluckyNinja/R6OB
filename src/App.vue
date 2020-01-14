@@ -3,13 +3,19 @@
     <aside class="nav">
       <NavBar></NavBar>
     </aside>
-    <div class="container"></div>
+    <div class="container">
+      <v-stage v-if="this.$store.state.map" ref="konva" :config="konvaConfig">
+        <v-layer v-for="layer in this.$store.state.map.floors" :key="layer.name">
+          <v-image :config="{image: loadImage(layer.image)}"></v-image>
+        </v-layer>
+      </v-stage>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import NavBar from './components/NavBar.vue';
+import NavBar from './views/AppNav.vue';
 
 @Component({
   components: {
@@ -17,7 +23,27 @@ import NavBar from './components/NavBar.vue';
   }
 })
 export default class App extends Vue {
-  @Prop() private msg!: string;
+  konvaConfig = {
+    width: 100,
+    height: 100,
+  } as any;
+  
+  public mounted(){
+    let konva = this.$refs.konva as Element;
+    // TODO fix konva canvas size
+    this.konvaConfig.width = this.$el.clientWidth;
+    this.konvaConfig.height = this.$el.clientHeight;
+  }
+
+  public loadImage(src: string) {
+    let image = new Image();
+    image.src = src;
+    image.onload = ()=>{
+      (this.$refs.konva as any).getNode().draw(); 
+    }
+    return image;
+  }
+
 }
 </script>
 

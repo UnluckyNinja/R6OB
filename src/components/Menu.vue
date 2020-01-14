@@ -18,14 +18,14 @@
       </div>
     </div>
     <!-- body options -->
-    <div v-if="map" class="panel-block header">
+    <div v-if="$store.state.map" class="panel-block header">
       <div class="level">
-        <h5 class="level-item title has-text-centered is-4">{{map.name.toUpperCase()}}</h5>
+        <h5 class="level-item title has-text-centered is-4">{{$store.state.map.name.toUpperCase()}}</h5>
       </div>
     </div>
     <!-- selector -->
     <b-modal width="80%" :active.sync="isMapSelectorModalActive">
-      <MapSelector @selected="isMapSelectorModalActive = false, map=$event"></MapSelector>
+      <MapSelector @selected="changeMap($event)"></MapSelector>
     </b-modal>
   </div>
 </template>
@@ -42,7 +42,11 @@ import { R6Map } from '../maps';
 })
 export default class Menu extends Vue {
   private isMapSelectorModalActive = false;
-  private map: R6Map|null = null;
+
+  private changeMap(event: R6Map) {
+    this.isMapSelectorModalActive = false;
+    this.$store.commit('changeMap', event);
+  }
 }
 </script>
 
