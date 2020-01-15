@@ -46,9 +46,11 @@ export default class AppMap extends Vue {
   public get konva() {
     return this.$refs.konva.getNode();
   }
+  
   public get map() {
     return this.$store.state.map;
   }
+
   public get layers() {
     return this.$store.state.layers;
   }
@@ -100,7 +102,8 @@ export default class AppMap extends Vue {
     this.konva.offset({ x: ox - newpos.x + pos.x, y: oy - newpos.y + pos.y });
     this.konva.draw();
     this.offset = this.konva.offset();
-    // for debug
+
+    /* for debug
     let debug = {
       oldMouse: pos,
       newMouse: newpos,
@@ -110,6 +113,7 @@ export default class AppMap extends Vue {
       newOffset: this.konva.offset()
     };
     console.log(debug);
+    // */
   }
   public getRelativePointerPosition(node: Konva.Node) {
     // the function will return pointer position relative to the passed node

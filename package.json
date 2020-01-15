@@ -2,6 +2,14 @@
   "name": "r6ob",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "UnluckyNinja",
+    "url": "https://unlucky.ninja"
+  },
+  "homepage": "https://unlucky.ninja/r6ob/",
+  "repository": {
+    "url": "https://github.com/UnluckyNinja/R6OB/"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
