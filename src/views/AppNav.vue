@@ -1,15 +1,16 @@
 <template>
-  <div class="nav nav-root">
-    <div class="columns">
-      <b-collapse :open.sync="isOpen" class="column" animation="fade" position="is-bottom">
-        <div class>
-          <Menu></Menu>
-        </div>
-      </b-collapse>
-      <div class="nav-handle column" @click="isOpen = !isOpen">
-        <div>
-          <b-button :icon-left="isOpen? 'chevron-left': 'bars' " type="is-dark"></b-button>
-        </div>
+  <div class="nav nav-root columns">
+    <b-collapse
+      :open.sync="isOpen"
+      class="nav-body column has-background-white-ter"
+      animation="fade"
+      position="is-bottom"
+    >
+      <Menu class="menu"></Menu>
+    </b-collapse>
+    <div class="nav-handle column" @click="isOpen = !isOpen">
+      <div>
+        <b-button :icon-left="isOpen? 'chevron-left': 'bars' " type="is-dark"></b-button>
       </div>
     </div>
   </div>
@@ -29,19 +30,19 @@ export default class AppNav extends Vue {
 }
 </script>
 
-<style lang="scss">
-.nav-root {
-  > .columns {
-    align-items: stretch;
-    flex-direction: row;
-    overflow: hidden;
-    > .column > div {
-      // height: 100%;
-      height: 100vh;
-    }
+<style lang="scss" scoped>
+.columns {
+  margin: 0;
+  padding: 0;
+  .column {
+    margin: 0;
+    padding: 0;
   }
 }
-
+.nav-handle,
+.nav-body {
+  flex-grow: 0;
+}
 div.nav-handle {
   padding-left: 0;
   padding-right: 0;
@@ -50,7 +51,7 @@ div.nav-handle {
   margin-left: -0.75rem;
   &:hover {
     cursor: pointer;
-    background-color: dimgrey;
+    background-color: rgb(211, 211, 211);
   }
 }
 </style>
