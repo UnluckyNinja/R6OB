@@ -3,7 +3,7 @@
     <div class="container" v-for="map of list" :key="map.name">
       <div class="card" @click="$emit('selected', map)">
         <figure class="image">
-          <img width="320px" height="180px" :src="require('/img/maps/' + map.coverSrc)" alt />
+          <img width="320px" height="180px" :src="'/img/maps/' + map.coverSrc" alt />
           <figcaption class="is-size-4">{{map.name.toUpperCase()}}</figcaption>
         </figure>
       </div>
