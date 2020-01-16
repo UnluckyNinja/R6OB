@@ -8,6 +8,9 @@
     </div>
     <footer class="footer has-background-grey-lighter">
       <div class="level">
+        <a class="level-item icon-link" href="https://github.com/UnluckyNinja/R6OB/" target="_blank">
+          <b-icon pack="fab" icon="github" type="is-dark" size="is-medium"></b-icon>
+        </a>
         <p class="level-item">@2020 UnluckyNinja</p>
       </div>
     </footer>
@@ -69,6 +72,10 @@ export default class App extends Vue {
     bottom: 0;
     left: 0;
   }
+}
+
+.icon-link {
+  margin: auto 8px;
 }
 
 .footer {

@@ -54,7 +54,7 @@
     },
     "kanal": {
       "name": "Kanal",
-      "floors": ["Drone Tunnel", "1", "2", "3", "Roof"]
+      "floors": ["Tunnel", "1", "2", "3", "Roof"]
     },
     "oregon": {
       "name": "Oregon",
