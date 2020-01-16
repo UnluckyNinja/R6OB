@@ -2,7 +2,7 @@
 **WARNING: Under Construction**  
 
 A Rainbow 6 Siege map tool
-[https://unlucky.ninja/r6ob/]
+[https://unlucky.ninja/R6OB/]
 
 # Planning
 
