@@ -1,9 +1,16 @@
 <template>
   <div id="app" class>
-    <aside class="nav">
-      <AppNav></AppNav>
-    </aside>
-    <AppMap></AppMap>
+    <div class="main">
+      <aside class="nav">
+        <AppNav></AppNav>
+      </aside>
+      <AppMap class="map"></AppMap>
+    </div>
+    <footer class="footer has-background-grey-lighter">
+      <div class="level">
+        <p class="level-item">@2020 UnluckyNinja</p>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -15,24 +22,61 @@ import AppMap from './views/AppMap.vue';
 @Component({
   components: {
     AppNav,
-    AppMap,
+    AppMap
   }
 })
 export default class App extends Vue {
+  public mounted() {
+    const locales = this.$i18n.messages;
+    const defaultLocale = (() => {
+      if (!navigator) {
+        return 'en';
+      }
+      if (window.localStorage.locale) {
+        return window.localStorage.locale;
+      }
+      let locale = Object.keys(locales).find(key => {
+        return navigator.language.toLowerCase().startsWith(key.toLowerCase());
+      });
+      window.localStorage.locale = locale;
+      return locale;
+    })();
+    this.$i18n.locale = defaultLocale;
+  }
 }
 </script>
 
 <style lang="scss">
-
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  > div {
-    height: 100vh;
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+#app > .main {
+  margin: 0;
+  position: relative;
+  flex: 1 1;
+  .map {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
   }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  height: 60px;
+  padding: 0px;
+  user-select: none;
 }
 
 html,
@@ -56,7 +100,7 @@ aside.nav {
   height: 100vh;
 }
 
-.box.small{
+.box.small {
   padding: 0.5rem;
 }
 

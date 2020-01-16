@@ -1,10 +1,10 @@
 <template>
   <div class="box">
-    <div class="container" v-for="map of list" :key="map.name">
+    <div class="container" v-for="map of list" :key="map.id">
       <div class="card" @click="$emit('selected', map)">
         <figure class="image">
           <img width="320px" height="180px" :src="`${publicPath}img/maps/${map.coverSrc}`" alt />
-          <figcaption class="is-size-4">{{map.name.toUpperCase()}}</figcaption>
+          <figcaption class="is-size-4">{{$t(`map.${map.id}.name`)}}</figcaption>
         </figure>
       </div>
     </div>
@@ -34,11 +34,12 @@ export default class MapSelector extends Vue {
   cursor: pointer;
 }
 div.container {
-  flex: 0 0 320px;
+  flex: 0 1 320px;
   margin: 12px;
 }
 div.box {
   display: flex;
+  justify-content: space-around;
   flex-flow: row wrap;
 }
 

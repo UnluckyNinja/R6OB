@@ -7,7 +7,8 @@ Vue.use(Vuex);
 
 // represent an image or drawing
 type Layer = {
-  name: string;
+  id: string;
+  mapid: string;
   enabled: boolean;
   alpha: number;
   image: HTMLImageElement;
@@ -16,19 +17,21 @@ type Layer = {
   parent?: Layer;
 };
 
-function mapToLayer(map: MapLayer): Layer {
+function mapToLayer(maplayer: MapLayer): Layer {
   let result: Layer;
-  let image = utils.loadImage(map.image);
+  let image = utils.loadImage(maplayer.image);
   let childs = undefined;
-  if (map.layers) {
-    childs = map.layers.map((layer) => {
+  if (maplayer.layers) {
+    childs = maplayer.layers.map((layer) => {
       let item = mapToLayer(layer);
+      item.id = [maplayer.id, item.id].join('.');
       item.parent = result;
       return item;
     });
   }
   result = {
-    name: map.name,
+    id: maplayer.id,
+    mapid: maplayer.mapid,
     enabled: false,
     alpha: 1.0,
     image: image,

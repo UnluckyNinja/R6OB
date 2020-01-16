@@ -1,0 +1,92 @@
+{
+  "lang": "English",
+  "tip": {
+    "nomap": "Please choose a map by click top-left button."
+  },
+  "map": {
+    "bank": {
+      "name": "Bank",
+      "floors": ["-1", "1", "2", "Roof"]
+    },
+    "bartlett": {
+      "name": "Bartlett U.",
+      "floors": ["1", "2", "Roof"]
+    },
+    "border": {
+      "name": "Border",
+      "floors": ["1", "2", "Roof"]
+    },
+    "chalet": {
+      "name": "Chalet",
+      "floors": ["-1", "1", "2", "Roof"]
+    },
+    "clubhouse": {
+      "name": "Club House",
+      "floors": ["-1", "1", "2", "Roof"]
+    },
+    "coastline": {
+      "name": "Coastline",
+      "floors": ["1", "2", "Roof"]
+    },
+    "consulate": {
+      "name": "Consulate",
+      "floors": ["-1", "1", "2", "Roof"]
+    },
+    "favela": {
+      "name": "Favela",
+      "floors": ["Shop", "1", "2", "3", "Roof"]
+    },
+    "fortress": {
+      "name": "Fortress",
+      "floors": ["1", "2", "3", "Roof"]
+    },
+    "hereford": {
+      "name": "Hereford",
+      "floors": ["1", "2", "3", "4", "Roof"]
+    },
+    "house": {
+      "name": "House",
+      "floors": ["-1", "1", "2", "Roof"]
+    },
+    "kafe": {
+      "name": "Kafe Dostoyevsky",
+      "floors": ["1", "2", "3", "Roof"]
+    },
+    "kanal": {
+      "name": "Kanal",
+      "floors": ["Drone Tunnel", "1", "2", "3", "Roof"]
+    },
+    "oregon": {
+      "name": "Oregon",
+      "floors": ["1", "2", "3", "4", "Roof"]
+    },
+    "outback": {
+      "name": "Outback",
+      "floors": ["1", "2", "Roof"]
+    },
+    "plane": {
+      "name": "Presidential Plane",
+      "floors": ["1", "2", "3", "Roof"]
+    },
+    "skyscraper": {
+      "name": "Skyscraper",
+      "floors": ["1", "2", "Roof"]
+    },
+    "themepark": {
+      "name": "Theme Park",
+      "floors": ["1", "2", "Roof"]
+    },
+    "tower": {
+      "name": "Tower",
+      "floors": ["1", "2", "3", "4", "Roof"]
+    },
+    "villa": {
+      "name": "Villa",
+      "floors": ["-1", "1", "2", "Roof"]
+    },
+    "yacht": {
+      "name": "Yacht",
+      "floors": ["1", "2", "3", "4", "Roof"]
+    }
+  }
+}

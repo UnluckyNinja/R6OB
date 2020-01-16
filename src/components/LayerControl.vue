@@ -9,7 +9,7 @@
         type="is-dark"
         @click="solo"
         outlined
-      >{{this.layer.name}}</b-button>
+      >{{$t(`map.${this.layer.mapid}.floors[${this.layer.id-1}]`)}}</b-button>
       <b-slider
         class="alpha-slider"
         type="is-dark"
@@ -23,7 +23,7 @@
       :open.sync="isOpen"
       animation="fade"
     >
-      <LayerControl v-for="layer in this.layer.childs" :key="layer.name" :layer="layer"></LayerControl>
+      <LayerControl v-for="layer in this.layer.childs" :key="layer.id" :layer="layer"></LayerControl>
     </b-collapse>
   </div>
 </template>

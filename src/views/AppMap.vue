@@ -1,7 +1,7 @@
 <template>
   <div class="has-background-black-bis" @wheel="onZoom($event)">
     <v-stage v-if="this.$store.state.map" @load="addPinchZoom" ref="konva" :config="konvaConfig">
-      <v-layer v-for="layer in this.$store.state.layers" :key="layer">
+      <v-layer v-for="layer in this.$store.state.layers" :key="layer.id">
         <v-image
           v-if="layer.enabled && layer.complete"
           :config="{image: layer.image, opacity: layer.alpha}"
@@ -20,9 +20,9 @@ import Konva from 'konva';
 })
 export default class AppMap extends Vue {
   public konvaConfig = {
-    width: 100,
-    height: 100,
-    draggable: true
+    width: 1000,
+    height: 1000,
+    draggable: true,
   };
 
   public $refs!: Vue['$refs'] & {
@@ -37,6 +37,7 @@ export default class AppMap extends Vue {
 
   public mounted() {
     window.addEventListener('resize', this.resizeHandle);
+    this.reloadCanvas();
   }
 
   public addPinchZoom() {

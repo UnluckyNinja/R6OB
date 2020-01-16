@@ -1,17 +1,19 @@
 export interface R6Map {
-  name: string;
+  id: string;
   coverSrc: string;
   floors: MapLayer[];
 }
 
 export interface MapLayer {
-  name: string;
+  id: string;
+  mapid: string;
   image: string;
   layers: MapLayer[];
 }
 
 const fileNames = [
   'bank_cover.webp',
+  'bartlett_cover.jpg',
   'border_cover.webp',
   'chalet_cover.webp',
   'clubhouse_cover.jpg',
@@ -39,21 +41,22 @@ const maps: R6Map[] = fileNames.map((file) => {
   const regex = /^(.*)_/;
   if (!regex.test(file)) throw `illegal map file name: ${file}`;
 
-  const name = file.match(regex)![1];
+  const mapid = file.match(regex)![1];
   let files = floorSrc.keys().filter((path) => {
-    return path.startsWith(`./${name}`);
+    return path.startsWith(`./${mapid}`);
   });
 
   // floors
   let layers: MapLayer[] = files.map((path) => {
     return {
-      name: filename(path),
+      id: filename(path),
+      mapid: mapid,
       image: floorSrc(path),
       layers: []
     };
   });
   return {
-    name,
+    id: mapid,
     coverSrc: file,
     floors: layers,
   };
