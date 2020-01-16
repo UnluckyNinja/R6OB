@@ -1,7 +1,7 @@
 {
   "lang": "English",
   "tip": {
-    "nomap": "Please choose a map by click top-left button."
+    "nomap": "Click top-left button to choose a map."
   },
   "map": {
     "bank": {
