@@ -74,4 +74,15 @@ export default class LayerControl extends Vue {
     margin: 0 20px;
   }
 }
+
+@media screen and (max-width: 800px) {
+  .level {
+    flex-wrap: wrap;
+  }
+  .layer-control {
+    .alpha-slider {
+      margin: 10px 20px;
+    }
+  }
+}
 </style>

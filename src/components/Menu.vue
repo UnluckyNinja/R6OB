@@ -29,8 +29,13 @@
       </div>
     </div>
 
-    <div class="layer-control root" v-for="layer in this.$store.state.layers.slice().reverse()" :key="layer.name">
+    <div
+      class="layer-control root"
+      v-for="layer in this.$store.state.layers.slice().reverse()"
+      :key="layer.name"
+    >
       <LayerControl @solo="solo($event)" :layer="layer"></LayerControl>
+      <!-- <b-loading :is-full-page="false" :active="!layer.complete"></b-loading> -->
     </div>
 
     <!-- selector -->
@@ -61,9 +66,10 @@ export default class Menu extends Vue {
   }
 
   public solo(self: any) {
-    this.$store.commit('toggleLayerAt', {target: self, enabled: true});
+    this.$store.commit('toggleLayerAt', { target: self, enabled: true });
     this.$store.state.layers.forEach((layer: any) => {
-      if(layer !== self) this.$store.commit('toggleLayerAt', {target: layer, enabled: false});
+      if (layer !== self)
+        this.$store.commit('toggleLayerAt', { target: layer, enabled: false });
     });
   }
 }
@@ -78,8 +84,19 @@ export default class Menu extends Vue {
   // flex-basis: 100%;
   padding: 20px;
 }
+.layer-control.root{
+  position: relative;
+}
 
-.panel {
-  width: 300px;
+
+@media screen and (max-width: 800px) {
+  .panel {
+    width: 200px;
+  }
+}
+@media screen and (min-width: 800px) {
+  .panel {
+    width: 300px;
+  }
 }
 </style>
