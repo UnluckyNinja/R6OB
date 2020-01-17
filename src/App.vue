@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class>
+  <div id="app" :style="{'--vh': heightVar+'px'}">
     <div class="main">
       <aside class="nav">
         <AppNav></AppNav>
@@ -7,18 +7,16 @@
       <AppMap class="map"></AppMap>
     </div>
     <footer class="footer has-background-grey-lighter">
-      <div class="level">
-        <a class="level-item icon-link" href="https://github.com/UnluckyNinja/R6OB/" target="_blank">
-          <b-icon pack="fab" icon="github" type="is-dark" size="is-medium"></b-icon>
-        </a>
-        <p class="level-item">@2020 UnluckyNinja</p>
-      </div>
+      <a class="level-item icon-link" href="https://github.com/UnluckyNinja/R6OB/" target="_blank">
+        <b-icon pack="fab" icon="github" type="is-dark" size="is-medium"></b-icon>
+      </a>
+      <p class="level-item">@2020 UnluckyNinja</p>
     </footer>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import AppNav from './views/AppNav.vue';
 import AppMap from './views/AppMap.vue';
 
@@ -29,7 +27,13 @@ import AppMap from './views/AppMap.vue';
   }
 })
 export default class App extends Vue {
+  public heightVar = window.innerHeight * 0.01;
+
   public mounted() {
+    window.addEventListener('resize', () => {
+      this.heightVar = window.innerHeight * 0.01;
+    });
+
     const locales = this.$i18n.messages;
     const defaultLocale = (() => {
       if (!navigator) {
@@ -57,7 +61,8 @@ export default class App extends Vue {
   text-align: center;
   color: #2c3e50;
 
-  height: 100vh;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
   display: flex;
   flex-direction: column;
 }

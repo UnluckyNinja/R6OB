@@ -9,9 +9,8 @@
       <Menu class="menu"></Menu>
     </b-collapse>
     <div class="nav-handle" @click="isOpen = !isOpen">
-      <div>
-        <b-button :icon-left="isOpen? 'chevron-left': 'bars' " type="is-dark"></b-button>
-      </div>
+        <b-button class="nav-button" :icon-left="isOpen? 'chevron-left': 'bars' " type="is-dark"></b-button>
+
     </div>
   </div>
 </template>
@@ -56,9 +55,16 @@ div.nav-handle {
   padding-right: 0;
   transition: background-color 0.5s;
   transition-timing-function: ease;
-  &:hover {
-    cursor: pointer;
-    background-color: rgb(211, 211, 211);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(211, 211, 211);
+    }
+  }
+  @media not all and (pointer: fine) {
+    .nav-button {
+      height: 100%;
+    }
   }
 }
 </style>
