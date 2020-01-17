@@ -21,8 +21,8 @@ import { Vector2d } from 'konva/types/types';
 })
 export default class AppMap extends Vue {
   public konvaConfig = {
-    width: 1000,
-    height: 1000,
+    width: 0,
+    height: 0,
     draggable: true
   };
 

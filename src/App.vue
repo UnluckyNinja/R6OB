@@ -10,7 +10,7 @@
       <a class="level-item icon-link" href="https://github.com/UnluckyNinja/R6OB/" target="_blank">
         <b-icon pack="fab" icon="github" type="is-dark" size="is-medium"></b-icon>
       </a>
-      <p class="level-item">@2020 UnluckyNinja</p>
+      <p class="level-item">©2020 UnluckyNinja</p>
     </footer>
   </div>
 </template>
@@ -86,7 +86,7 @@ export default class App extends Vue {
 .footer {
   display: flex;
   justify-content: center;
-  height: 60px;
+  height: 50px;
   padding: 0px;
   user-select: none;
 }
