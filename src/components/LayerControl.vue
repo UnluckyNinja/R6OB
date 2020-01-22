@@ -1,15 +1,17 @@
 <template>
   <div class="box small layer-control">
-    <b-field class="level">
+    <b-field class="field level" grouped>
       <div class="control">
         <b-checkbox type="is-dark" v-model="enabled"></b-checkbox>
       </div>
-      <b-button
-        class="control label has-text-centered"
-        type="is-dark"
-        @click="solo"
-        outlined
-      >{{$t(`map.${this.layer.mapid}.floors[${this.layer.id-1}]`)}}</b-button>
+      <div class="control">
+        <b-button
+          class="label has-text-centered"
+          type="is-dark"
+          @click="solo"
+          outlined
+        >{{$t(`map.${this.layer.mapid}.floors[${this.layer.id-1}]`)}}</b-button>
+      </div>
       <b-slider
         class="alpha-slider"
         type="is-dark"
@@ -17,6 +19,36 @@
         v-model="alpha"
         :custom-formatter="val => val.toFixed(0) + '%'"
       ></b-slider>
+    </b-field>
+    <b-field grouped>
+      <b-field>
+        <b-checkbox-button size="is-small" :value="true" disabled>
+          <div>
+            <b-icon icon="video"></b-icon>
+          </div>
+        </b-checkbox-button>
+        <b-checkbox-button size="is-small" :value="true" disabled>
+          <div>
+            <b-icon icon="border-style"></b-icon>
+          </div>
+        </b-checkbox-button>
+        <b-checkbox-button size="is-small" :value="true" disabled>
+          <div>
+            <b-icon icon="project-diagram"></b-icon>
+          </div>
+        </b-checkbox-button>
+      </b-field>
+      <b-field expanded></b-field>
+      <b-field position="is-right" grouped>
+        <b-checkbox-button v-model="draggable" value="false" type="is-dark" size="is-small">
+          <div>
+            <b-icon icon="arrows-alt"></b-icon>
+          </div>
+        </b-checkbox-button>
+        <div class="control">
+          <b-button type="is-danger" @click="requestReset" size="is-small" icon-left="redo-alt"></b-button>
+        </div>
+      </b-field>
     </b-field>
     <b-collapse
       v-if="this.layer.childs && this.layer.childs.length > 0"
@@ -36,25 +68,32 @@ import { R6Map } from '../maps';
   components: {}
 })
 export default class LayerControl extends Vue {
-  @Prop() public layer: any;
+  @Prop() public readonly layer: any;
   private isOpen = false;
 
   public get enabled() {
     return this.layer.enabled;
   }
   public set enabled(value: boolean) {
-    this.$store.commit('toggleLayerAt', this.layer); // TO decouple
+    this.$store.commit('toggleLayer', this.layer); // TO decouple
   }
   public get alpha() {
-    return this.layer.alpha * 100;
+    return this.layer.opacity * 100;
   }
   public set alpha(value: number) {
-    this.$store.commit('changeLayerAlphaAt', {
-      // TO decouple
-      target: this.layer,
-      alpha: value / 100
-    });
+    this.$emit('update:layer-key', this.layer, 'opacity', value / 100);
   }
+  public get draggable() {
+    return !this.layer.draggable;
+  }
+  public set draggable(value: boolean) {
+    this.$emit('update:layer-key', this.layer, 'draggable', !value);
+  }
+
+  public requestReset() {
+    this.$emit('update:layer-key', this.layer, 'requestReset', true);
+  }
+
   solo() {
     this.$emit('solo', this.layer);
   }
@@ -67,11 +106,8 @@ export default class LayerControl extends Vue {
 }
 .layer-control {
   margin: 12px;
-  .control {
+  .field {
     margin: 6px;
-  }
-  .alpha-slider {
-    margin: 0 20px;
   }
 }
 

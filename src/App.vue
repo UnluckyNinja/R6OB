@@ -66,6 +66,7 @@ export default class App extends Vue {
   display: flex;
   flex-direction: column;
 }
+
 #app > .main {
   margin: 0;
   position: relative;
@@ -118,5 +119,9 @@ aside.nav {
 
 div.nopadding {
   padding: 0;
+}
+
+.b-checkbox.checkbox input[type=checkbox] {
+  visibility: hidden;
 }
 </style>

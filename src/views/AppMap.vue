@@ -1,12 +1,7 @@
 <template>
-  <div class="has-background-black-bis" @wheel="onZoom($event)">
+  <div class="map root has-background-black-bis" @wheel="onZoom($event)">
     <v-stage ref="konva" :config="konvaConfig">
-      <v-layer v-for="layer in this.$store.state.layers" :key="layer.id">
-        <v-image
-          v-if="layer.enabled && layer.complete"
-          :config="{image: layer.image, opacity: layer.alpha}"
-        ></v-image>
-      </v-layer>
+      <AppLayer v-for="layer in this.$store.state.layers" :key="layer.id" :layer="layer"></AppLayer>
     </v-stage>
   </div>
 </template>
@@ -15,16 +10,21 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Konva from 'konva';
 import { Vector2d } from 'konva/types/types';
+import AppLayer from './AppLayer.vue';
 
 @Component({
-  components: {}
+  components: {
+    AppLayer
+  }
 })
 export default class AppMap extends Vue {
-  public konvaConfig = {
-    width: 0,
-    height: 0,
-    draggable: true
-  };
+  public get konvaConfig() {
+    return {
+      width: this.$store.state.width,
+      height: this.$store.state.height,
+      draggable: this.$store.state.draggable,
+    };
+  }
 
   public $refs!: Vue['$refs'] & {
     konva: {
@@ -40,6 +40,14 @@ export default class AppMap extends Vue {
     window.addEventListener('resize', this.resizeHandle);
     this.addPinchZoom();
     this.reloadCanvas();
+  }
+
+  public updated() {
+    this.reloadCanvas();
+  }
+
+  public beforeDestory() {
+    window.removeEventListener('resize', this.resizeHandle);
   }
 
   // should be only used on mobile
@@ -87,12 +95,14 @@ export default class AppMap extends Vue {
 
         var scale = this.konva.scaleX() * (dist / lastDist);
 
-        scale = Math.max(0.3, Math.min(4, scale));
+        scale = Math.max(
+          this.MIN_ZOOM_SCALE,
+          Math.min(this.MAX_ZOOM_SCALE, scale)
+        );
         this.konva.scaleX(scale);
         this.konva.scaleY(scale);
 
         let curCenter = this.getRelativePointerPosition(this.konva, centerPos);
-
 
         let ox = this.konva.offsetX();
         let oy = this.konva.offsetY();
@@ -108,7 +118,7 @@ export default class AppMap extends Vue {
         // which comes with new center, and the center in previous call will be outdated,
         // causing canvas to shake.
         // to mitigate it, update to new center immediately after changing offset
-        curCenter = this. getRelativePointerPosition(this.konva, centerPos); 
+        curCenter = this.getRelativePointerPosition(this.konva, centerPos);
 
         this.offset = this.konva.offset();
 
@@ -122,40 +132,6 @@ export default class AppMap extends Vue {
     });
   }
 
-  public updated() {
-    this.reloadCanvas();
-  }
-
-  public beforeDestory() {
-    window.removeEventListener('resize', this.resizeHandle);
-  }
-
-  public get konva() {
-    return this.$refs.konva.getNode();
-  }
-
-  public get map() {
-    return this.$store.state.map;
-  }
-
-  public get layers() {
-    return this.$store.state.layers;
-  }
-
-  public get scale() {
-    return this.$store.state.scale;
-  }
-  public set scale(value) {
-    this.$store.commit('changeScale', value);
-  }
-
-  public get offset() {
-    return this.$store.state.offset;
-  }
-  public set offset(value) {
-    this.$store.commit('changeOffset', value);
-  }
-
   public reloadCanvas() {
     this.$store.commit('changeCanvasSize', {
       x: this.$el.clientWidth,
@@ -166,8 +142,6 @@ export default class AppMap extends Vue {
     if (!this.layers) return;
     if (!this.layers[0]) return;
 
-    this.konvaConfig.width = this.$el.clientWidth;
-    this.konvaConfig.height = this.$el.clientHeight;
     this.konva.scale({ x: this.scale, y: this.scale });
     this.konva.offset(this.offset);
     this.konva.draw();
@@ -205,14 +179,14 @@ export default class AppMap extends Vue {
     let sign = Math.sign(event.deltaY); // zoom in or out
     let ratio = 1 - sign * 0.1; // 0.9 or 1.1
     ratio *= this.scale;
-    ratio = Math.max(0.3, Math.min(4, ratio));
+    ratio = Math.max(this.MIN_ZOOM_SCALE, Math.min(this.MAX_ZOOM_SCALE, ratio));
     this.resizeCanva(ratio);
   }
 
   public getRelativePointerPosition(node: Konva.Node, pos?: Vector2d | null) {
     // the function will return pointer position relative to the passed node
     let transform = node.getAbsoluteTransform().copy();
-    
+
     // to detect relative position we need to invert transform
     transform.invert();
 
@@ -223,8 +197,37 @@ export default class AppMap extends Vue {
     // now we find relative point
     let result = transform.point(pos);
 
-    return result
+    return result;
   }
+
+  public get konva() {
+    return this.$refs.konva.getNode();
+  }
+
+  public get map() {
+    return this.$store.state.map;
+  }
+
+  public get layers() {
+    return this.$store.state.layers;
+  }
+
+  public get scale() {
+    return this.$store.state.scale;
+  }
+  public set scale(value) {
+    this.$store.commit('changeScale', value);
+  }
+
+  public get offset() {
+    return this.$store.state.offset;
+  }
+  public set offset(value) {
+    this.$store.commit('changeOffset', value);
+  }
+
+  public MAX_ZOOM_SCALE = 4;
+  public MIN_ZOOM_SCALE = 0.3;
 }
 </script>
 

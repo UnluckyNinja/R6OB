@@ -2,25 +2,32 @@ import Vue from 'vue';
 import Vuex, { mapActions, StoreOptions } from 'vuex';
 import { R6Map, MapLayer } from '@/maps';
 import * as utils from '@/utils';
+import Konva from 'konva';
 
 Vue.use(Vuex);
 
 // represent an image or drawing
-type Layer = {
+interface Layer {
   id: string;
   mapid: string;
   enabled: boolean;
-  alpha: number;
+  requestReset: boolean;
+
   image: HTMLImageElement;
   complete: boolean;
-  childs?: Layer[];
-  parent?: Layer;
-};
+
+  draggable: boolean;
+  opacity: number;
+  offset: { x: number, y: number; };
+
+  childs: Layer[];
+  parent: Layer | null;
+}
 
 function mapToLayer(maplayer: MapLayer): Layer {
   let result: Layer;
   let image = utils.loadImage(maplayer.image);
-  let childs = undefined;
+  let childs: Layer[] = [];
   if (maplayer.layers) {
     childs = maplayer.layers.map((layer) => {
       let item = mapToLayer(layer);
@@ -33,10 +40,17 @@ function mapToLayer(maplayer: MapLayer): Layer {
     id: maplayer.id,
     mapid: maplayer.mapid,
     enabled: false,
-    alpha: 1.0,
+    requestReset: false,
+
     image: image,
     complete: false,
+
+    draggable: false,
+    opacity: 1,
+    offset: { x: 0, y: 0 },
+
     childs: childs,
+    parent: null
   };
   return result;
 }
@@ -44,10 +58,12 @@ function mapToLayer(maplayer: MapLayer): Layer {
 export default new Vuex.Store({
   state: {
     map: null as R6Map | null,
+    layers: [] as Layer[],
+    // stage config
     width: 100,
     height: 100,
-    layers: [] as Layer[],
     scale: 1,
+    draggable: true,
     offset: {
       x: 0,
       y: 0,
@@ -61,23 +77,6 @@ export default new Vuex.Store({
       state.width = payload.x;
       state.height = payload.y;
     },
-    addLayer(state, layer) {
-      state.layers.push(layer);
-    },
-    clearLayers(state) {
-      state.layers = [];
-    },
-    toggleLayerAt(state, payload) {
-      if (payload.target) {
-        payload.target.enabled = payload.enabled;
-        return;
-      }
-
-      payload.enabled = !payload.enabled;
-    },
-    changeLayerAlphaAt(state, payload) {
-      payload.target.alpha = payload.alpha;
-    },
     changeScale(state, value) {
       if (typeof value === 'number') {
         state.scale = value;
@@ -89,6 +88,40 @@ export default new Vuex.Store({
     clearConfig(state) {
       state.scale = 1;
       state.offset = { x: 0, y: 0 };
+      state.draggable = true;
+    },
+    changeDraggable(state, value){
+      state.draggable = value;
+    },
+
+    // Layer methods:
+    addLayer(state, layer) {
+      state.layers.push(layer);
+    },
+    clearLayers(state) {
+      state.layers = [];
+    },
+    resetLayer(state, layer){
+      layer
+    },
+
+    // payload: {layer: Layer, enabled: boolean} or layer itself
+    toggleLayer(state, payload) {
+      if (payload.layer) {
+        payload.layer.enabled = payload.enabled;
+        return;
+      }
+
+      payload.enabled = !payload.enabled;
+    },
+    changeLayerOpacity(state, { layer, opacity }) {
+      layer.opacity = opacity;
+    },
+    changeLayerOffset(state, { layer, offset }) {
+      layer.offset = offset;
+    },
+    changeLayerKey(state, { layer, key, value }) {
+      layer[key] = value;
     }
   },
   actions: {

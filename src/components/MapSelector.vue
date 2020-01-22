@@ -24,7 +24,7 @@ export default class MapSelector extends Vue {
       return maps;
     }
   })
-  private list!: R6Map[];
+  private readonly list!: R6Map[];
   private publicPath = process.env.BASE_URL;
 }
 </script>

@@ -9,8 +9,7 @@
       <Menu class="menu"></Menu>
     </b-collapse>
     <div class="nav-handle" @click="isOpen = !isOpen">
-        <b-button class="nav-button" :icon-left="isOpen? 'chevron-left': 'bars' " type="is-dark"></b-button>
-
+      <b-button class="nav-button" :icon-left="isOpen? 'chevron-left': 'bars' " type="is-dark"></b-button>
     </div>
   </div>
 </template>
@@ -44,12 +43,16 @@ export default class AppNav extends Vue {
   & > * {
     flex: 0 0;
   }
+  .nav-body {
+    display: flex;
+  }
+
+  .nav-handle,
+  .nav-body {
+    flex-grow: 0;
+  }
 }
 
-.nav-handle,
-.nav-body {
-  flex-grow: 0;
-}
 div.nav-handle {
   padding-left: 0;
   padding-right: 0;

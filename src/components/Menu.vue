@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="menu-root container">
     <!-- header -->
     <div class="panel">
       <!-- selector trigger button -->
@@ -18,25 +18,28 @@
       </div>
       <!-- title -->
     </div>
-    <!-- body options -->
-    <div>
-      <div v-if="$store.state.map" class="level">
-        <h5
-          class="level-item title has-text-centered is-4"
-        >{{$t(`map.${$store.state.map.id}.name`)}}</h5>
-      </div>
-      <div v-else class="map-tip">
-        <p>{{$t("tip.nomap")}}</p>
-      </div>
-    </div>
 
-    <div
-      class="layer-control root"
-      v-for="layer in this.$store.state.layers.slice().reverse()"
-      :key="layer.id"
-    >
-      <LayerControl @solo="solo($event)" :layer="layer"></LayerControl>
-      <!-- <b-loading :is-full-page="false" :active="!layer.complete"></b-loading> -->
+    <!-- body options -->
+    <div class="body">
+      <div>
+        <div v-if="$store.state.map" class="level">
+          <h5
+            class="level-item title has-text-centered is-4"
+          >{{$t(`map.${$store.state.map.id}.name`)}}</h5>
+        </div>
+        <div v-else class="map-tip">
+          <p>{{$t("tip.nomap")}}</p>
+        </div>
+      </div>
+
+      <div
+        class="layer-control root"
+        v-for="layer in this.$store.state.layers.slice().reverse()"
+        :key="layer.id"
+      >
+        <LayerControl @solo="solo($event)" @update:layer-key="updateLayerKey" :layer="layer"></LayerControl>
+        <!-- <b-loading :is-full-page="false" :active="!layer.complete"></b-loading> -->
+      </div>
     </div>
 
     <!-- selector -->
@@ -69,11 +72,32 @@ export default class Menu extends Vue {
   }
 
   public solo(self: any) {
-    this.$store.commit('toggleLayerAt', { target: self, enabled: true });
+    this.$store.commit('toggleLayer', { layer: self, enabled: true });
     this.$store.state.layers.forEach((layer: any) => {
       if (layer !== self)
-        this.$store.commit('toggleLayerAt', { target: layer, enabled: false });
+        this.$store.commit('toggleLayer', { layer: layer, enabled: false });
     });
+  }
+
+  public updateLayerKey(layer: any, key: string, value: any) {
+    this.$store.commit('changeLayerKey', {
+      layer,
+      key,
+      value
+    });
+    if (key === 'draggable') {
+      if (value === true) {
+          this.$store.commit('changeDraggable', false);
+      }
+      if (value === false) {
+        let allFalse = this.$store.state.layers.every((one: any) => {
+          return one.draggable === false;
+        });
+        if (allFalse) {
+          this.$store.commit('changeDraggable', true);
+        }
+      }
+    }
   }
 }
 </script>
@@ -95,7 +119,13 @@ export default class Menu extends Vue {
     }
   }
 }
-
+.menu-root {
+  display: flex;
+  flex-direction: column;
+  .body {
+    overflow: hidden auto;
+  }
+}
 .map-tip {
   // flex-basis: 100%;
   padding: 20px;
