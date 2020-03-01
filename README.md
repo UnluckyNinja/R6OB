@@ -1,4 +1,4 @@
-# R6OB
+# R6OB - Rainbow Six Siege Operation Board
 **WARNING: Under Construction**  
 
 A Rainbow 6 Siege map tool
