@@ -10,3 +10,8 @@ A Rainbow 6 Siege map tool
 * Breakable highlight
 * Free draw
 * Operator sticker
+
+# Changelog: 
+
+* 2020-3-12: 
+  * Updated Oregon & Fixed Yacht 

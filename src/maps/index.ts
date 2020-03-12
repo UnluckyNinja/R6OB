@@ -25,7 +25,7 @@ const fileNames = [
   'house_cover.webp',
   'kafe_cover.jpg',
   'kanal_cover.webp',
-  'oregon_cover.webp',
+  'oregon_cover.jpg',
   'outback_cover.webp',
   'plane_cover.jpg',
   'skyscraper_cover.jpg',
