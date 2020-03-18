@@ -1,7 +1,7 @@
 <template>
   <div class="map root has-background-black-bis" @wheel="onZoom($event)">
     <v-stage ref="konva" :config="konvaConfig">
-      <AppLayer v-for="layer in this.$store.state.layers" :key="layer.id" :layer="layer"></AppLayer>
+      <AppLayer v-for="layer in this.$store.state.map.floors" :key="layer.id" :layer="layer"></AppLayer>
     </v-stage>
   </div>
 </template>
@@ -11,6 +11,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import Konva from 'konva';
 import { Vector2d } from 'konva/types/types';
 import AppLayer from './AppLayer.vue';
+import MapLayer from '../maps/MapLayer';
+import FloorLayer from '../maps/FloorLayer';
 
 @Component({
   components: {
@@ -18,11 +20,14 @@ import AppLayer from './AppLayer.vue';
   }
 })
 export default class AppMap extends Vue {
+  canvasWidth: number = 100;
+  canvasHeight: number = 100;
+
   public get konvaConfig() {
     return {
-      width: this.$store.state.width,
-      height: this.$store.state.height,
-      draggable: this.$store.state.draggable,
+      width: this.canvasWidth,
+      height: this.canvasHeight,
+      draggable: this.$store.state.stageConfig.draggable
     };
   }
 
@@ -133,10 +138,16 @@ export default class AppMap extends Vue {
   }
 
   public reloadCanvas() {
-    this.$store.commit('changeCanvasSize', {
-      x: this.$el.clientWidth,
-      y: this.$el.clientHeight
-    });
+    // this.$store.commit('changeConfig', {
+    //   name: 'width',
+    //   value: this.$el.clientWidth
+    // });
+    // this.$store.commit('changeConfig', {
+    //   name: 'height',
+    //   value: this.$el.clientHeight
+    // });
+    this.canvasWidth = window.innerWidth;
+    this.canvasHeight = window.innerHeight;
 
     if (!this.map) return;
     if (!this.layers) return;
@@ -204,26 +215,26 @@ export default class AppMap extends Vue {
     return this.$refs.konva.getNode();
   }
 
-  public get map() {
+  public get map(): MapLayer {
     return this.$store.state.map;
   }
 
-  public get layers() {
-    return this.$store.state.layers;
+  public get layers(): FloorLayer[] {
+    return this.$store.state.map.floors;
   }
 
-  public get scale() {
-    return this.$store.state.scale;
+  public get scale(): number {
+    return this.$store.state.stageConfig.scale;
   }
   public set scale(value) {
-    this.$store.commit('changeScale', value);
+    this.$store.commit('changeConfig', { name: 'scale', value });
   }
 
   public get offset() {
-    return this.$store.state.offset;
+    return this.$store.state.stageConfig.offset;
   }
   public set offset(value) {
-    this.$store.commit('changeOffset', value);
+    this.$store.commit('changeConfig', { name: 'offset', value });
   }
 
   public MAX_ZOOM_SCALE = 4;

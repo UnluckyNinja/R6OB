@@ -2,11 +2,21 @@
   <div class="nav nav-root">
     <b-collapse
       :open.sync="isOpen"
-      class="nav-body has-background-white-ter"
+      class="nav-main has-background-white-ter"
       animation="fade"
       position="is-bottom"
     >
-      <Menu class="menu"></Menu>
+      <Menu class="nav-main-body"></Menu>
+      <footer class="footer nav-main-footer has-background-grey-lighter">
+        <a
+          class="level-item icon-link"
+          href="https://github.com/UnluckyNinja/R6OB/"
+          target="_blank"
+        >
+          <b-icon pack="fab" icon="github" type="is-dark" size="is-medium"></b-icon>
+        </a>
+        <p class="level-item">©2020 UnluckyNinja</p>
+      </footer>
     </b-collapse>
     <div class="nav-handle" @click="isOpen = !isOpen">
       <b-button class="nav-button" :icon-left="isOpen? 'chevron-left': 'bars' " type="is-dark"></b-button>
@@ -29,27 +39,23 @@ export default class AppNav extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.columns {
-  margin: 0;
-  padding: 0;
-  .column {
-    margin: 0;
-    padding: 0;
-  }
-}
-
 .nav-root {
   display: flex;
   & > * {
-    flex: 0 0;
-  }
-  .nav-body {
-    display: flex;
+    flex: none;
   }
 
-  .nav-handle,
-  .nav-body {
-    flex-grow: 0;
+  .nav-main {
+    display: flex;
+    max-height: 100vh;
+    flex-direction: column;
+    overflow: hidden;
+    .nav-main-body {
+      flex: auto;
+    }
+    .nav-main-footer {
+      flex: none;
+    }
   }
 }
 

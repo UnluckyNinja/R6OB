@@ -6,12 +6,6 @@
       </aside>
       <AppMap class="map"></AppMap>
     </div>
-    <footer class="footer has-background-grey-lighter">
-      <a class="level-item icon-link" href="https://github.com/UnluckyNinja/R6OB/" target="_blank">
-        <b-icon pack="fab" icon="github" type="is-dark" size="is-medium"></b-icon>
-      </a>
-      <p class="level-item">©2020 UnluckyNinja</p>
-    </footer>
   </div>
 </template>
 
@@ -34,21 +28,27 @@ export default class App extends Vue {
       this.heightVar = window.innerHeight * 0.01;
     });
 
+    this.$i18n.locale = this.locale;
+  }
+
+  public get locale() {
+    // return last set locale
+    if (window.localStorage.locale) {
+      return window.localStorage.locale;
+    }
+    // if can't retrive info from browser
+    if (!navigator) {
+      return 'en';
+    }
     const locales = this.$i18n.messages;
-    const defaultLocale = (() => {
-      if (!navigator) {
-        return 'en';
-      }
-      if (window.localStorage.locale) {
-        return window.localStorage.locale;
-      }
-      let locale = Object.keys(locales).find(key => {
-        return navigator.language.toLowerCase().startsWith(key.toLowerCase());
-      });
-      window.localStorage.locale = locale;
-      return locale;
-    })();
-    this.$i18n.locale = defaultLocale;
+    let locale = Object.keys(locales).find(key => {
+      return navigator.language.toLowerCase().startsWith(key.toLowerCase());
+    });
+    if (!locale) {
+      locale = 'en';
+    }
+    window.localStorage.locale = locale;
+    return locale;
   }
 }
 </script>
@@ -121,7 +121,25 @@ div.nopadding {
   padding: 0;
 }
 
-.b-checkbox.checkbox input[type=checkbox] {
+.horizontal {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  &.transpose > * {
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: column;
+  }
+  & > * {
+    flex: none;
+
+    &.expanded {
+      flex: 1 1;
+    }
+  }
+}
+
+.b-checkbox.checkbox input[type='checkbox'] {
   visibility: hidden;
 }
 </style>

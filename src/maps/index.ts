@@ -1,17 +1,17 @@
 export interface R6Map {
   id: string;
   coverSrc: string;
-  floors: MapLayer[];
+  floorScreenshotPath?: {
+    n?: string[],
+    e?: string[],
+    s?: string[],
+    w?: string[],
+    top?: string[],
+  };
+  floorBlueprintPath?: string[];
 }
 
-export interface MapLayer {
-  id: string;
-  mapid: string;
-  image: string;
-  layers: MapLayer[];
-}
-
-const fileNames = [
+export const fileNames = [
   'bank_cover.webp',
   'bartlett_cover.jpg',
   'border_cover.webp',
@@ -35,42 +35,51 @@ const fileNames = [
   'yacht_cover.webp',
 ];
 
-const floorSrc = require.context('@/assets/maps/', true);
-
-const maps: R6Map[] = fileNames.map((file) => {
-  const regex = /^(.*)_/;
-  if (!regex.test(file)) throw `illegal map file name: ${file}`;
-
-  const mapid = file.match(regex)![1];
-  let files = floorSrc.keys().filter((path) => {
-    return path.startsWith(`./${mapid}`);
-  });
-
-  // floors
-  let layers: MapLayer[] = files.map((path) => {
-    return {
-      id: filename(path),
-      mapid: mapid,
-      image: floorSrc(path),
-      layers: []
-    };
-  });
-  return {
-    id: mapid,
-    coverSrc: file,
-    floors: layers,
-  };
-});
-
-function filename(path: string): any {
-  let temp = path.split('/').pop();
-  if (!temp) temp = path;
-  let dot = temp.lastIndexOf('.');
-  if (dot === -1) {
-    return temp;
+// A map ID is 'bank' in 'bank_cover.webp'
+const mapIds: string[] = fileNames.map((name) => {
+  const regex = /^([A-Za-z0-9]+)_/;
+  // must conform the name format
+  if (!regex.test(name)) {
+    console.error(`Can't extract id from file name: ${name}`);
+    return '';
   }
-  return temp.slice(0, dot);
+  return name.match(regex)![1];
+}).filter((it) => it !== '');
 
+// a context to handy retrive the map image
+export const requireMapFile = require.context('@/assets/maps/', true);
+
+const maps: { [key: string]: R6Map; } = Object.fromEntries(mapIds.map((mapId) => {
+  let nprefix = `./${mapId}/screenshots/n`;
+  // TODO make all NESW direction?
+
+  let bpprefix = `./${mapId}/blueprints`;
+
+  let screenshots = requireMapFile.keys().filter((path) => {
+    return path.startsWith(nprefix);
+  });
+
+  let blueprints = requireMapFile.keys().filter((path) => {
+    return path.startsWith(bpprefix);
+  });
+
+  let map: R6Map = {
+    id: mapId,
+    coverSrc: getMapCoverFileName(mapId)!,
+    floorScreenshotPath: { n: screenshots },
+    floorBlueprintPath: blueprints
+  };
+
+  return [mapId, map];
+}));
+
+
+function getMapCoverFileName(mapId: string) {
+  return fileNames.find((it) => it.startsWith(mapId));
 }
 
 export default maps;
+
+export * from './Layer';
+export * from './MapLayer';
+export * from './FloorLayer';

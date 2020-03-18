@@ -1,44 +1,42 @@
 <template>
   <div class="menu-root container">
     <!-- header -->
-    <div class="panel">
+    <div class="menu-header horizontal">
       <!-- selector trigger button -->
-      <div class="panel-heading horizontal">
-        <div class="item">
-          <b-button
-            icon-left="map-marked-alt"
-            type="is-dark"
-            @click="isMapSelectorModalActive = true"
-          ></b-button>
-        </div>
-        <div class="item expanded">
-          <h1 class="title">R6OB</h1>
-        </div>
-        <LocalePicker class="item"></LocalePicker>
+      <div class="item">
+        <b-button
+          icon-left="map-marked-alt"
+          type="is-dark"
+          @click="isMapSelectorModalActive = true"
+        ></b-button>
       </div>
       <!-- title -->
+      <div class="item expanded">
+        <h1 class="title">R6OB</h1>
+      </div>
+      <!-- Locale Picker -->
+      <LocalePicker class="item"></LocalePicker>
     </div>
 
     <!-- body options -->
-    <div class="body">
-      <div>
-        <div v-if="$store.state.map" class="level">
-          <h5
-            class="level-item title has-text-centered is-4"
-          >{{$t(`map.${$store.state.map.id}.name`)}}</h5>
+    <div class="menu-main" >
+      <div v-if="this.$store.state.map.floors">
+        <div v-if="$store.state.map" class="header has-text-centered">
+          <h5 class="title is-4">{{$t(`map.${$store.state.map.id}.name`)}}</h5>
         </div>
-        <div v-else class="map-tip">
-          <p>{{$t("tip.nomap")}}</p>
+        <div class="main">
+          <div
+            class="layer-control-root"
+            v-for="layer in this.$store.state.map.floors.slice().reverse()"
+            :key="layer.id"
+          >
+            <LayerControl @solo="solo($event)" @update:layer-key="updateLayerKey" :layer="layer"></LayerControl>
+            <!-- <b-loading :is-full-page="false" :active="!layer.complete"></b-loading> -->
+          </div>
         </div>
       </div>
-
-      <div
-        class="layer-control root"
-        v-for="layer in this.$store.state.layers.slice().reverse()"
-        :key="layer.id"
-      >
-        <LayerControl @solo="solo($event)" @update:layer-key="updateLayerKey" :layer="layer"></LayerControl>
-        <!-- <b-loading :is-full-page="false" :active="!layer.complete"></b-loading> -->
+      <div v-else class="map-tip">
+        <p>{{$t("tip.nomap")}}</p>
       </div>
     </div>
 
@@ -55,6 +53,7 @@ import MapSelector from './MapSelector.vue';
 import LayerControl from './LayerControl.vue';
 import LocalePicker from './LocalePicker.vue';
 import { R6Map } from '../maps';
+import FloorLayer from '../maps/FloorLayer';
 
 @Component({
   components: {
@@ -66,16 +65,15 @@ import { R6Map } from '../maps';
 export default class Menu extends Vue {
   private isMapSelectorModalActive = false;
 
-  private changeMap(event: R6Map) {
+  private changeMap(map: R6Map) {
     this.isMapSelectorModalActive = false;
-    this.$store.dispatch('updateMap', event);
+    this.$store.dispatch('loadMap', { mapId: map.id });
   }
 
-  public solo(self: any) {
-    this.$store.commit('toggleLayer', { layer: self, enabled: true });
-    this.$store.state.layers.forEach((layer: any) => {
-      if (layer !== self)
-        this.$store.commit('toggleLayer', { layer: layer, enabled: false });
+  public solo(picked: FloorLayer) {
+    picked.config.enabled = true;
+    picked.parent!.floors.forEach((layer: any) => {
+      if (layer !== picked) layer.config.enabled = false;
     });
   }
 
@@ -87,7 +85,7 @@ export default class Menu extends Vue {
     });
     if (key === 'draggable') {
       if (value === true) {
-          this.$store.commit('changeDraggable', false);
+        this.$store.commit('changeDraggable', false);
       }
       if (value === false) {
         let allFalse = this.$store.state.layers.every((one: any) => {
@@ -103,44 +101,44 @@ export default class Menu extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  word-break: keep-all;
-}
-
-.horizontal {
-  display: flex;
-  flex-direction: row;
-  .item {
-    flex: 0 0;
-    margin: 8px;
-
-    &.expanded {
-      flex: 1 1;
-    }
-  }
-}
 .menu-root {
   display: flex;
   flex-direction: column;
-  .body {
-    overflow: hidden auto;
+
+  .menu-header {
+    padding: 1rem;
+    word-break: keep-all;
   }
-}
-.map-tip {
-  // flex-basis: 100%;
-  padding: 20px;
-}
-.layer-control.root {
-  position: relative;
+  .menu-main {
+    display: flex;
+    flex-direction: column;
+    .map-tip {
+      // flex-basis: 100%;
+      padding: 20px;
+      flex: 1 0;
+    }
+    .header {
+    }
+    .main {
+      overflow: hidden auto;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden auto;
+      .layer-control-root {
+        flex: none;
+        position: relative;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 800px) {
-  .panel {
+  .menu-root {
     max-width: 240px;
   }
 }
 @media screen and (min-width: 800px) {
-  .panel {
+  .menu-root {
     width: 300px;
   }
 }

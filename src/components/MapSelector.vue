@@ -21,7 +21,7 @@ import maps, { R6Map } from '../maps';
 export default class MapSelector extends Vue {
   @Prop({
     default: () => {
-      return maps;
+      return Object.values(maps);
     }
   })
   private readonly list!: R6Map[];

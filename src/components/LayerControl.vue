@@ -1,5 +1,6 @@
 <template>
   <div class="box small layer-control">
+    <!-- Checkbox & Name Button & Alpha Slider -->
     <b-field class="field level" grouped>
       <div class="control">
         <b-checkbox type="is-dark" v-model="enabled"></b-checkbox>
@@ -15,11 +16,14 @@
       <b-slider
         class="alpha-slider"
         type="is-dark"
-        :disabled="!this.layer.enabled"
+        :disabled="!this.layer.config.enabled"
         v-model="alpha"
         :custom-formatter="val => val.toFixed(0) + '%'"
       ></b-slider>
     </b-field>
+
+
+    <!-- mini buttons just placeholder now -->
     <b-field grouped>
       <b-field>
         <b-checkbox-button size="is-small" :value="true" disabled>
@@ -39,23 +43,29 @@
         </b-checkbox-button>
       </b-field>
       <b-field expanded></b-field>
+
+      <!-- single floor drag -->
       <b-field position="is-right" grouped>
         <b-checkbox-button v-model="draggable" value="false" type="is-dark" size="is-small">
           <div>
             <b-icon icon="arrows-alt"></b-icon>
           </div>
         </b-checkbox-button>
+
+        <!-- button to reset offset -->
         <div class="control">
-          <b-button type="is-danger" @click="requestReset" size="is-small" icon-left="redo-alt"></b-button>
+          <b-button type="is-danger" @click="resetOffset" size="is-small" icon-left="redo-alt"></b-button>
         </div>
       </b-field>
     </b-field>
+
+    <!-- placeholder -->
     <b-collapse
-      v-if="this.layer.childs && this.layer.childs.length > 0"
+      v-if="this.layer.subLayers && this.layer.subLayers.length > 0"
       :open.sync="isOpen"
       animation="fade"
     >
-      <LayerControl v-for="layer in this.layer.childs" :key="layer.id" :layer="layer"></LayerControl>
+      <LayerControl v-for="layer in this.layer.subLayers" :key="layer.id" :layer="layer"></LayerControl>
     </b-collapse>
   </div>
 </template>
@@ -63,38 +73,39 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { R6Map } from '../maps';
+import FloorLayer from '../maps/FloorLayer';
 
 @Component({
   components: {}
 })
 export default class LayerControl extends Vue {
-  @Prop() public readonly layer: any;
+  @Prop() public readonly layer!: FloorLayer;
   private isOpen = false;
 
   public get enabled() {
-    return this.layer.enabled;
+    return this.layer.config.enabled;
   }
   public set enabled(value: boolean) {
-    this.$store.commit('toggleLayer', this.layer); // TO decouple
+    this.layer.config.enabled = value;
   }
   public get alpha() {
-    return this.layer.opacity * 100;
+    return this.layer.config.opacity * 100;
   }
   public set alpha(value: number) {
-    this.$emit('update:layer-key', this.layer, 'opacity', value / 100);
+    this.layer.config.opacity = value / 100;
   }
   public get draggable() {
-    return !this.layer.draggable;
+    return this.layer.config.draggable;
   }
   public set draggable(value: boolean) {
-    this.$emit('update:layer-key', this.layer, 'draggable', !value);
+    this.layer.config.draggable = value;
   }
 
-  public requestReset() {
-    this.$emit('update:layer-key', this.layer, 'requestReset', true);
+  public resetOffset() {
+    this.layer.config.offset = {x: 0, y: 0};
   }
 
-  solo() {
+  public solo() {
     this.$emit('solo', this.layer);
   }
 }
