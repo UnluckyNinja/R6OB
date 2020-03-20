@@ -23,10 +23,10 @@ export default class AppLayer extends Vue {
 
   public get config() {
     return {
-      opacity: this.layer.opacity,
-      offset: this.layer.offset,
-      draggable: this.layer.draggable,
-      listening: this.layer.draggable
+      opacity: this.layer.config.opacity,
+      offset: this.layer.config.offset,
+      draggable: this.layer.config.draggable,
+      listening: this.layer.config.draggable
     };
   }
 

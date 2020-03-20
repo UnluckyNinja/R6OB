@@ -36,7 +36,7 @@ export const fileNames = [
 ];
 
 // A map ID is 'bank' in 'bank_cover.webp'
-const mapIds: string[] = fileNames.map((name) => {
+export const mapIds: string[] = fileNames.map((name) => {
   const regex = /^([A-Za-z0-9]+)_/;
   // must conform the name format
   if (!regex.test(name)) {

@@ -1,49 +1,58 @@
 <template>
-  <div class="nav nav-root">
-    <b-collapse
-      :open.sync="isOpen"
-      class="nav-main has-background-white-ter"
-      animation="fade"
-      position="is-bottom"
-    >
-      <Menu class="nav-main-body"></Menu>
-      <footer class="footer nav-main-footer has-background-grey-lighter">
-        <a
-          class="level-item icon-link"
-          href="https://github.com/UnluckyNinja/R6OB/"
-          target="_blank"
-        >
-          <b-icon pack="fab" icon="github" type="is-dark" size="is-medium"></b-icon>
-        </a>
-        <p class="level-item">©2020 UnluckyNinja</p>
-      </footer>
-    </b-collapse>
-    <div class="nav-handle" @click="isOpen = !isOpen">
-      <b-button class="nav-button" :icon-left="isOpen? 'chevron-left': 'bars' " type="is-dark"></b-button>
+  <div class="d-flex flex-column nav-root">
+    <!-- header -->
+    <div class="d-flex align-center flex-shrink-0">
+      <!-- selector trigger button -->
+      <v-btn
+        class="ma-3 icononly"
+        color="primary"
+        small
+        fab
+        elevation="0"
+        @click="$emit('map-overlay', true)"
+      >
+        <v-icon size="28">mdi-map-marker-circle</v-icon>
+      </v-btn>
+      <!-- title -->
+      <div class="headline ma-3 flex-grow-1">
+        <h1>R6OB</h1>
+      </div>
+      <!-- Locale Picker -->
+      <div class="ma-3 pa-0">
+        <LocalePicker></LocalePicker>
+      </div>
     </div>
+    <div class="overflow-hidden flex-grow-1">
+      <Menu class_="nav-main-body"></Menu>
+    </div>
+    <v-footer class="d-flex flex-shrink-0">
+      <a class="ma-2" href="https://github.com/UnluckyNinja/R6OB/" target="_blank">
+        <v-icon color="black" large>mdi-github</v-icon>
+      </a>
+      <div class="ma-2">©2020 UnluckyNinja</div>
+    </v-footer>
+    
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import Menu from '../components/Menu.vue';
+import Menu from '@/components/Menu.vue';
+import LocalePicker from '@/components/LocalePicker.vue';
 
 @Component({
   components: {
-    Menu
+    Menu,
+    LocalePicker
   }
 })
 export default class AppNav extends Vue {
-  private isOpen: boolean = true;
-}
+  }
 </script>
 
 <style lang="scss" scoped>
 .nav-root {
-  display: flex;
-  & > * {
-    flex: none;
-  }
+  height: 100vh;
 
   .nav-main {
     display: flex;
@@ -55,24 +64,6 @@ export default class AppNav extends Vue {
     }
     .nav-main-footer {
       flex: none;
-    }
-  }
-}
-
-div.nav-handle {
-  padding-left: 0;
-  padding-right: 0;
-  transition: background-color 0.5s;
-  transition-timing-function: ease;
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      cursor: pointer;
-      background-color: rgb(211, 211, 211);
-    }
-  }
-  @media not all and (pointer: fine) {
-    .nav-button {
-      height: 100%;
     }
   }
 }

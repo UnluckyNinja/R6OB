@@ -1,5 +1,5 @@
 <template>
-  <div class="map root has-background-black-bis" @wheel="onZoom($event)">
+  <div class="black" @wheel="onZoom($event)">
     <v-stage ref="konva" :config="konvaConfig">
       <AppLayer v-for="layer in this.$store.state.map.floors" :key="layer.id" :layer="layer"></AppLayer>
     </v-stage>

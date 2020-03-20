@@ -1,5 +1,13 @@
 {
   "lang": "English",
+  "ui": {
+    "map-selector":{
+      "title": "Choose a Map",
+      "filter-all": "All",
+      "filter-quickplay": "Quick Match",
+      "filter-ranked": "Ranked"
+    }
+  },
   "tip": {
     "nomap": "Click top-left button to choose a map."
   },

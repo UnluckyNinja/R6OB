@@ -1,5 +1,13 @@
 {
   "lang": "中文",
+  "ui": {
+    "map-selector": {
+      "title": "选择地图",
+      "filter-all": "所有",
+      "filter-quickplay": "快速对战",
+      "filter-ranked": "排位赛"
+    }
+  },
   "tip": {
     "nomap": "点击左上角按钮选择地图"
   },

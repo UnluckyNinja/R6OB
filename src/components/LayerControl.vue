@@ -1,5 +1,13 @@
 <template>
   <div class="box small layer-control">
+    <v-container>
+      <v-row>
+        <v-col>
+
+        </v-col>
+        <v-col></v-col>
+      </v-row>
+    </v-container>
     <!-- Checkbox & Name Button & Alpha Slider -->
     <b-field class="field level" grouped>
       <div class="control">
@@ -58,15 +66,6 @@
         </div>
       </b-field>
     </b-field>
-
-    <!-- placeholder -->
-    <b-collapse
-      v-if="this.layer.subLayers && this.layer.subLayers.length > 0"
-      :open.sync="isOpen"
-      animation="fade"
-    >
-      <LayerControl v-for="layer in this.layer.subLayers" :key="layer.id" :layer="layer"></LayerControl>
-    </b-collapse>
   </div>
 </template>
 

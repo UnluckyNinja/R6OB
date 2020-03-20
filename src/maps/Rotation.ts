@@ -1,0 +1,31 @@
+export const QUICK_MATCH = [
+  'bank',
+  'border',
+  'chalet',
+  'clubhouse',
+  'coastline',
+  'consulate',
+  'fortress',
+  'hereford',
+  'house',
+  'kafe',
+  'oregon',
+  'outback',
+  'themepark',
+  'villa',
+];
+
+export const RANKED = [
+  'bank',
+  'border',
+  'chalet',
+  'clubhouse',
+  'coastline',
+  'consulate',
+  'kafe',
+  'kanal',
+  'oregon',
+  'outback',
+  'themepark',
+  'villa',
+];
