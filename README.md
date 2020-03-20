@@ -13,7 +13,7 @@ A Rainbow 6 Siege map tool
 
 # Bleeding Build
 
-[Repo](https://github.com/UnluckyNinja/R6OB-dev/)
+[Repo](https://github.com/UnluckyNinja/R6OB-dev/) 
 [https://unlucky.ninja/R6OB-dev/]
 
 # Changelog: 
