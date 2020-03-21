@@ -25,20 +25,20 @@
     <div class="overflow-hidden flex-grow-1">
       <Menu class_="nav-main-body"></Menu>
     </div>
+    <v-divider></v-divider>
     <v-footer class="d-flex flex-shrink-0">
-      <a class="ma-2" href="https://github.com/UnluckyNinja/R6OB/" target="_blank">
+      <a class="mx-2" href="https://github.com/UnluckyNinja/R6OB/" target="_blank">
         <v-icon color="black" large>mdi-github</v-icon>
       </a>
-      <div class="ma-2">©2020 UnluckyNinja</div>
+      <div class="mx-2">©2020 UnluckyNinja</div>
     </v-footer>
-    
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import Menu from '@/components/Menu.vue';
-import LocalePicker from '@/components/LocalePicker.vue';
+import Menu from '@/components/menu/Menu.vue';
+import LocalePicker from '@/components/menu/LocalePicker.vue';
 
 @Component({
   components: {
@@ -46,8 +46,7 @@ import LocalePicker from '@/components/LocalePicker.vue';
     LocalePicker
   }
 })
-export default class AppNav extends Vue {
-  }
+export default class AppNav extends Vue {}
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <template>
   <div class="black" @wheel="onZoom($event)">
     <v-stage ref="konva" :config="konvaConfig">
-      <AppLayer v-for="layer in this.$store.state.map.floors" :key="layer.id" :layer="layer"></AppLayer>
+      <AppLayer v-for="floor in this.$store.state.map.floors" :key="floor.id" :layer="floor"></AppLayer>
     </v-stage>
   </div>
 </template>

@@ -22,7 +22,7 @@
     <v-content>
       <AppMap class="map"></AppMap>
       <FloorSlider
-        class="floor-slider ml-10 px-4"
+        class="floor-slider mx-10 px-10"
         v-if="$store.state.map.floors"
         :list="$store.state.map.floors"
         label="i18nPath"
@@ -46,10 +46,10 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import AppNav from './views/AppNav.vue';
 import AppMap from './views/AppMap.vue';
-import MapSelector from '@/components/MapSelector.vue';
+import MapSelector from '@/components/menu/MapSelector.vue';
 import FloorSlider from '@/components/FloorSlider.vue';
 import { R6Map } from '@/maps';
-import FloorLayer from './maps/FloorLayer';
+import FloorLayer from '@/maps/FloorLayer';
 
 @Component({
   components: {
@@ -108,7 +108,7 @@ export default class App extends Vue {
         if (!found) {
           item.config.opacity = 1;
           found = true;
-        }else{
+        } else {
           item.config.opacity = value;
         }
       }
@@ -124,7 +124,11 @@ body {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  // font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Tahoma, Arial, 'Noto Sans CJK SC', 'Noto Sans CJK',
+    'Source Han Sans', 'Noto Serif CJK SC', 'Noto Serif CJK',
+    'Source Han Serif SC', ‘Source Han Serif’, STXihei, '华文细黑',
+    'Microsoft YaHei', '微软雅黑', SimSun, '宋体', Heiti, '黑体', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -9,7 +9,16 @@
     hide-details
     height="40"
   >
-    <template v-slot:thumb-label="{value}">{{getLabel(value)}}</template>
+    <template v-slot:thumb-label="{value}">
+      <div class="body-1">
+        <div v-if="typeof (text = getLabel(value)) === 'string'">{{text}}</div>
+        <div v-else>
+          {{text[0]}}
+          <v-icon color="accent" small>mdi-arrow-left-right</v-icon>
+          {{text[1]}}
+        </div>
+      </div>
+    </template>
   </v-slider>
 </template>
 <script lang="ts">
@@ -55,18 +64,13 @@ export default class FloorSlider extends Vue {
   }
 
   getLabel(value: number) {
-    
     let between = this.getBetween(value);
     let labelL = between.left[this.label];
     let labelR = between.right[this.label];
-    if(labelL === labelR){
-    return this.i18n
-      ? `${this.$t(labelL)}`
-      : `${labelL}`;
+    if (labelL === labelR) {
+      return this.i18n ? `${this.$t(labelL)}` : `${labelL}`;
     }
-    return this.i18n
-      ? `${this.$t(labelL)} - ${this.$t(labelR)}`
-      : `${labelL} - ${labelR}`;
+    return this.i18n ? [this.$t(labelL), this.$t(labelR)] : [labelL, labelR];
   }
 
   onInput(value: number) {
@@ -95,7 +99,4 @@ export default class FloorSlider extends Vue {
 }
 </script>
 <style lang="scss" scoped>
-.root {
-  // width: 100%;
-}
 </style>

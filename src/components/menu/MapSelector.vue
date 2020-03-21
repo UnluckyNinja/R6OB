@@ -1,16 +1,20 @@
 <template>
   <div class="root d-flex flex-column overflow-hidden accent">
     <v-toolbar dense style="position:relative; z-index: 10">
+      <!-- header -->
       <v-spacer></v-spacer>
       <v-toolbar-title class>{{$t(`ui.map-selector.title`)}}</v-toolbar-title>
       <v-btn @click="$emit('close')" icon>
         <v-icon>mdi-close</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
+      <!-- fliters -->
       <template v-slot:extension>
         <v-radio-group v-if="$vuetify.breakpoint.smAndUp" v-model="selectedFilter">
+          <!-- container -->
           <v-container>
             <v-row>
+              <!-- v-for each filter type -->
               <v-col v-for="(r, i) of ROTATIONS" :key="i" cols="auto">
                 <v-radio :value="i">
                   <template v-slot:label>
@@ -40,9 +44,10 @@
         </div>
       </template>
     </v-toolbar>
+    <!-- maplist -->
     <v-container class="overflow-y-auto">
       <!-- <v-row class="overflow-y-auto">  -->
-      <!-- subsititute -->
+      <!-- subsititute v-row for animation purpose -->
       <transition-group class="row overflow-hidden" name="map-list" tag="div">
         <v-col cols="12" sm="6" md="4" v-for="map of rotation" :key="map.id">
           <v-card class="ma-auto" width="320" @click="$emit('selected', map)">
@@ -58,7 +63,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import maps, { R6Map, mapIds } from '../maps';
+import maps, { R6Map, mapIds } from '@/maps';
 import { QUICK_MATCH, RANKED } from '@/maps/Rotation';
 
 @Component({

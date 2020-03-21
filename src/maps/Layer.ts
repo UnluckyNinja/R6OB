@@ -1,6 +1,5 @@
 import { loadImage } from '@/utils';
 
-/* eslint-disable no-dupe-class-members */
 export default class Layer {
   readonly id: string;
   readonly mapid: string;
@@ -12,7 +11,7 @@ export default class Layer {
     enabled: false,
     draggable: false,
     opacity: 1.0,
-    offset: { x: 0, y: 0 }
+    position: { x: 0, y: 0 }
   };
 
   constructor(id: string, mapid: string, image?: HTMLImageElement) {
@@ -36,5 +35,5 @@ export interface LayerConfig {
   enabled: boolean;
   draggable: boolean;
   opacity: number;
-  offset: { x: number, y: number; };
+  position: { x: number, y: number; };
 }

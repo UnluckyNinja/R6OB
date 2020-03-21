@@ -7,12 +7,19 @@
       </div>
       <div class="flex-grow-1 overflow-x-hidden overflow-y-auto">
         <div
-          class="layer-control-root"
-          v-for="layer in this.$store.state.map.floors.slice().reverse()"
-          :key="layer.id"
+          v-for="floor in this.$store.state.map.floors.slice().reverse()"
+          :key="floor.id"
+          style="position: relative"
         >
-          <!-- <LayerControl @solo="solo($event)" @update:layer-key="updateLayerKey" :layer="layer"></LayerControl> -->
-          <!-- <b-loading :is-full-page="false" :active="!layer.complete"></b-loading> -->
+          <LayerControl
+            @solo="solo($event)"
+            @solo-drag="soloDrag($event)"
+            @update:layer-key="updateLayerKey"
+            :layer="floor"
+          ></LayerControl>
+          <v-overlay :value="!floor.image" absolute>
+            <v-progress-circular indeterminate></v-progress-circular>
+          </v-overlay>
         </div>
       </div>
     </div>
@@ -25,8 +32,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import LayerControl from './LayerControl.vue';
-import { R6Map } from '../maps';
-import FloorLayer from '../maps/FloorLayer';
+import { R6Map } from '@/maps';
+import FloorLayer from '@/maps/FloorLayer';
 
 @Component({
   components: {
@@ -36,8 +43,19 @@ import FloorLayer from '../maps/FloorLayer';
 export default class Menu extends Vue {
   public solo(picked: FloorLayer) {
     picked.config.enabled = true;
+    picked.config.opacity = 1;
     picked.parent!.floors.forEach((layer: any) => {
       if (layer !== picked) layer.config.enabled = false;
+    });
+  }
+  public soloDrag(picked: FloorLayer) {
+    if (picked.config.draggable) {
+      picked.config.draggable = false;
+      return;
+    }
+    picked.config.draggable = true;
+    picked.parent!.floors.forEach((layer: any) => {
+      if (layer !== picked) layer.config.draggable = false;
     });
   }
 

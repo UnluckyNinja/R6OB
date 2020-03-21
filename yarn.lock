@@ -1286,10 +1286,10 @@
     "@types/source-list-map" "*"
     source-map "^0.6.1"
 
-"@types/webpack@^4.41.7":
-  version "4.41.7"
-  resolved "https://registry.npm.taobao.org/@types/webpack/download/@types/webpack-4.41.7.tgz#22be27dbd4362b01c3954ca9b021dbc9328d9511"
-  integrity sha1-Ir4n29Q2KwHDlUypsCHbyTKNlRE=
+"@types/webpack@^4.41.8":
+  version "4.41.8"
+  resolved "https://registry.npm.taobao.org/@types/webpack/download/@types/webpack-4.41.8.tgz#d2244f5f612ee30230a5c8c4ae678bce90d27277"
+  integrity sha1-0iRPX2Eu4wIwpcjErmeLzpDScnc=
   dependencies:
     "@types/anymatch" "*"
     "@types/node" "*"
@@ -2633,13 +2633,6 @@ bser@2.1.1:
   dependencies:
     node-int64 "^0.4.0"
 
-buefy@^0.8.13:
-  version "0.8.13"
-  resolved "https://registry.npm.taobao.org/buefy/download/buefy-0.8.13.tgz#90ce1645807c15d81f584dc78a2090a0feb7a70b"
-  integrity sha1-kM4WRYB8FdgfWE3HiiCQoP63pws=
-  dependencies:
-    bulma "0.7.5"
-
 buffer-from@1.x, buffer-from@^1.0.0:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/buffer-from/download/buffer-from-1.1.1.tgz#32713bc028f75c02fdb710d7c7bcec1f2c6070ef"
@@ -2678,11 +2671,6 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/builtin-status-codes/download/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
-
-bulma@0.7.5:
-  version "0.7.5"
-  resolved "https://registry.npm.taobao.org/bulma/download/bulma-0.7.5.tgz#35066c37f82c088b68f94450be758fc00a967208"
-  integrity sha1-NQZsN/gsCIto+URQvnWPwAqWcgg=
 
 bytes@3.0.0:
   version "3.0.0"
@@ -9245,10 +9233,10 @@ regexpu-core@^4.6.0:
     unicode-match-property-ecmascript "^1.0.4"
     unicode-match-property-value-ecmascript "^1.1.0"
 
-register-service-worker@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.npm.taobao.org/register-service-worker/download/register-service-worker-1.7.0.tgz?cache=0&sync_timestamp=1583826917135&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregister-service-worker%2Fdownload%2Fregister-service-worker-1.7.0.tgz#b4b60d87a1d117f119bfd24ece073dcdb85dae64"
-  integrity sha1-tLYNh6HRF/EZv9JOzgc9zbhdrmQ=
+register-service-worker@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.npm.taobao.org/register-service-worker/download/register-service-worker-1.7.1.tgz#6308347ac6c0af0f6c0b22ea5d59d25e836bc932"
+  integrity sha1-Ywg0esbArw9sCyLqXVnSXoNryTI=
 
 regjsgen@^0.5.0:
   version "0.5.1"
@@ -10967,11 +10955,6 @@ vue-class-component@^7.2.3:
   resolved "https://registry.npm.taobao.org/vue-class-component/download/vue-class-component-7.2.3.tgz#a5b1abd53513a72ad51098752e2dedd499807cca"
   integrity sha1-pbGr1TUTpyrVEJh1Li3t1JmAfMo=
 
-vue-cli-plugin-buefy@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.npm.taobao.org/vue-cli-plugin-buefy/download/vue-cli-plugin-buefy-0.3.7.tgz#31e5637529482a5a4564676f539db16278b0895c"
-  integrity sha1-MeVjdSlIKlpFZGdvU52xYniwiVw=
-
 vue-cli-plugin-i18n@^0.6.1:
   version "0.6.1"
   resolved "https://registry.npm.taobao.org/vue-cli-plugin-i18n/download/vue-cli-plugin-i18n-0.6.1.tgz#5b22fbaec6166ef2a34c8044d98ef5c8729e2e43"
@@ -11066,10 +11049,10 @@ vue-loader@^15.8.3:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-property-decorator@^8.4.0:
-  version "8.4.0"
-  resolved "https://registry.npm.taobao.org/vue-property-decorator/download/vue-property-decorator-8.4.0.tgz#f4e641f84ca51a7b4721e236392a1efbb6eac00b"
-  integrity sha1-9OZB+EylGntHIeI2OSoe+7bqwAs=
+vue-property-decorator@^8.4.1:
+  version "8.4.1"
+  resolved "https://registry.npm.taobao.org/vue-property-decorator/download/vue-property-decorator-8.4.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-property-decorator%2Fdownload%2Fvue-property-decorator-8.4.1.tgz#fd8045b8678e1348fed57f9149279e00e404ed38"
+  integrity sha1-/YBFuGeOE0j+1X+RSSeeAOQE7Tg=
   dependencies:
     vue-class-component "^7.1.0"
 

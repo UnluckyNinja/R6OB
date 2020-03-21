@@ -1,27 +1,18 @@
 <template>
-  <v-menu offset-y>
+  <v-menu offset-y left>
     <template v-slot:activator="{ on }">
       <v-btn class="icononly" color="info" small fab elevation="0" v-on="on">
         <v-icon>mdi-translate</v-icon>
       </v-btn>
     </template>
     <v-list>
-      <v-list-item-group v-model="locale">
+      <v-list-item-group v-model="locale" mandatory>
         <v-list-item v-for="loc in this.locales" :key="loc" :value="loc">
           <v-list-item-title>{{$t('lang', loc)}}</v-list-item-title>
         </v-list-item>
       </v-list-item-group>
     </v-list>
   </v-menu>
-  <!-- <b-dropdown v-model="locale" aria-role="list">
-    <b-button class="button" type="is-info" icon-left="language" slot="trigger"></b-button>
-    <b-dropdown-item
-      v-for="loc in this.locales"
-      :key="loc"
-      aria-role="listitem"
-      :value="loc"
-    >{{$t('lang', loc)}}</b-dropdown-item>
-  </b-dropdown>-->
 </template>
 
 <script lang="ts">
