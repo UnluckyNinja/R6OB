@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b9b665495507b6d1a3bc",
+    "revision": "9c0fbd4c19fe15b9a004",
     "url": "/R6OB/css/app.50721b76.css"
   },
   {
@@ -428,12 +428,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/R6OB/img/maps/yacht_cover.webp"
   },
   {
-    "revision": "ebb6e680133d09861fa1acc412f85290",
+    "revision": "1755f9f35d9cf92965ac2e737380bd35",
     "url": "/R6OB/index.html"
   },
   {
-    "revision": "b9b665495507b6d1a3bc",
-    "url": "/R6OB/js/app.9cf28752.js"
+    "revision": "9c0fbd4c19fe15b9a004",
+    "url": "/R6OB/js/app.d89ad7ac.js"
   },
   {
     "revision": "0257c170ec16fbe9f998",
